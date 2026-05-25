@@ -3,20 +3,6 @@
 
 
 """
-Polazni kod treba samo da se promeni da radi nad mojim CSV-om, a sintetička od demoa izbaciti. 
-
-Razumeo. Pravilo za sve buduće modele:
-
-polazni kod iz članka se direktno menja da radi nad tvojim loto CSV-om
-sintetička demo data, neiskorišćeni delovi, sve što ne pripada polaznom zadatku se izbacuje
-predviđa se sledeće loto kolo + back-test, snimanje u TXT
-bez paralelnih "novih" klasa ispod polaznog, bez pitanja
-"""
-
-
-
-
-"""
 Hibridne arhitekture za predikciju koje kombinuju deep learning i klasične time-series modele.
 
 4. Transformer-XH: Hybrid Attention for Long Horizons (PyTorch with PyWavelets)
@@ -206,8 +192,8 @@ if torch.backends.cudnn.is_available():
     torch.backends.cudnn.benchmark = False
 
 
-CSV_PATH = "/Users/4c/Desktop/GHQ/KvantniRegresor/loto7hh_4620_k41.csv"
-OUT_TXT = Path("/Users/4c/Desktop/GHQ/TimeSeriesModels/4_Transformer-XH_loto_v2_predikcija.txt")
+CSV_PATH = "/loto7hh_4620_k41.csv"
+OUT_TXT = Path("/4_Transformer-XH_loto_v2_predikcija.txt")
 
 N_MIN, N_MAX = 1, 39
 K = 7
@@ -501,7 +487,7 @@ with torch.no_grad():
     _, attention_matrix = model(torch.from_numpy(X_next))
 plt.matshow(attention_matrix[0].detach().numpy()[-100:, :])
 plt.title("Cross-Attention: Last 100 Steps vs Downsampled Context (loto)")
-plt.savefig('/Users/4c/Desktop/GHQ/TimeSeriesModels/4_transformer_xh_attention.png')
+plt.savefig('/4_transformer_xh_attention.png')
 plt.show()
 
 
@@ -522,9 +508,9 @@ epoch   50/50  train_loss=0.92068  val_loss=1.49668  best_epoch=1
 ✅ Trening završen. best_epoch=1, best_val_loss=1.13756
 
 Predikcija sledeće Loto 7/39 kombinacije:
-Transformer-XH_best     -> [10, 14, 15, 22, 23, 29, 37]  (suma=150, neparnih=4/7, niskih(<=19)=3/7, raspon=27)
-Transformer-XH_final    -> [15, 17, 23, 29, 31, 34, 37]  (suma=186, neparnih=6/7, niskih(<=19)=2/7, raspon=22)
-Transformer-XH_ensemble -> [15, 17, 23, 29, 31, 34, 37]  (suma=186, neparnih=6/7, niskih(<=19)=2/7, raspon=22)
+Transformer-XH_best     -> [10, x, 15, y, 23, z, 37]  (suma=150, neparnih=4/7, niskih(<=19)=3/7, raspon=27)
+Transformer-XH_final    -> [15, x, 23, y, 31, z, 37]  (suma=186, neparnih=6/7, niskih(<=19)=2/7, raspon=22)
+Transformer-XH_ensemble -> [15, x, 23, y, 31, z, 37]  (suma=186, neparnih=6/7, niskih(<=19)=2/7, raspon=22)
 
 Back-test (poslednjih 100 izvlačenja):
 model                      hits/7    hit%     AUC    LRAP
